@@ -2,73 +2,113 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login - Royale Express</title>
-<link rel="stylesheet" href="style.css">
+<title>Admin Dashboard - Royale Express</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-.login-container{max-width:400px;margin:80px auto;background:#fff;padding:30px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.15);border-top:5px solid #FFCC00;text-align:center}
-.login-container img{height:70px;margin-bottom:15px}
-.login-container h2{color:#D40511;margin-bottom:20px}
-.login-container input{width:100%;padding:12px;margin-bottom:12px;border:1px solid #ddd;border-radius:8px}
-.login-btn{background:#D40511;color:#fff;border:none;padding:12px;width:100%;border-radius:8px;font-weight:800;cursor:pointer;font-size:15px}
-.error-msg{color:#D40511;background:#ffeaea;padding:8px;border-radius:6px;margin-bottom:12px;display:none;font-size:13px}
-#adminContent{display:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#f4f5f7;color:#222}
+.header{background:#D40511;color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
+.header .left{display:flex;align-items:center;gap:10px;font-weight:800}
+.header img{height:36px;background:#fff;padding:4px;border-radius:6px}
+.header a{color:#FFCC00;text-decoration:none;font-weight:600}
+.container{max-width:1200px;margin:18px auto;padding:0 14px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.card h2{font-size:18px;margin-bottom:4px;color:#D40511}
+.card .sub{font-size:12px;color:#777;margin-bottom:14px}
+label{font-size:12px;font-weight:700;margin-top:10px;display:block}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;margin-top:4px;font-size:14px}
+input:focus,select:focus,textarea:focus{border-color:#D40511;outline:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{padding:12px 16px;border:none;border-radius:8px;font-weight:800;cursor:pointer;width:100%;margin-top:14px}
+.create-btn{background:#D40511;color:#fff}
+.update-btn{background:#111;color:#fff}
+#generatedCode{margin-top:12px;padding:12px;background:#FFF3CD;border:1px dashed #D40511;border-radius:8px;display:none;text-align:center}
+.list-section{grid-column:1 / -1}
+@media(max-width:900px){.container{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div id="loginScreen" class="login-container">
-  <img src="logo.png" alt="Logo">
-  <h2>Admin Login</h2>
-  <p style="font-size:12px;color:#666;margin-bottom:15px">Royale Express<br>royalexpressdelivery011@gmail.com</p>
-  <div id="errorMsg" class="error-msg"></div>
-  <input type="text" id="adminUser" placeholder="Username">
-  <input type="password" id="adminPass" placeholder="Password">
-  <button onclick="adminLogin()" class="login-btn">Login →</button>
-  <p style="font-size:11px;color:#888;margin-top:15px"><br>----------------</p>
-  <a href="index.html" style="display:block;margin-top:15px;font-size:12px;color:#D40511;text-decoration:none">← Back to Site</a>
+<div class="header"><div class="left"><img src="logo.png">Royale Express Admin</div><div><a href="index.html">Home</a> <a href="tracking.html" style="margin-left:12px">Track</a> <a href="#" onclick="localStorage.removeItem('royaleAdmin');location.reload()" style="margin-left:12px">Logout</a></div></div>
+
+<div class="container">
+  <!-- CREATE -->
+  <div class="card">
+    <h2>📦 Create New Shipment + Waybill</h2><p class="sub">Fill all fields - date/time & addresses required for waybill</p>
+    
+    <label>Sender Name *</label><input id="senderName" placeholder="John Smith">
+    <label>Sender Full Address *</label><textarea id="senderAddress" rows="2" placeholder="123 Allen Avenue, Ikeja, Lagos, Nigeria"></textarea>
+    
+    <label>Receiver Name *</label><input id="receiverName" placeholder="Jane Doe">
+    <label>Receiver Full Address *</label><textarea id="receiverAddress" rows="2" placeholder="45 Broadway, New York, NY 10001, USA"></textarea>
+    <label>Receiver Phone</label><input id="receiverPhone" placeholder="+17122121378">
+    
+    <div class="grid2">
+      <div><label>Origin City *</label><input id="origin" placeholder="Lagos"></div>
+      <div><label>Destination City *</label><input id="destination" placeholder="New York"></div>
+    </div>
+
+    <div class="grid2">
+      <div><label>Shipment Date & Time *</label><input id="shipmentDate" type="datetime-local"></div>
+      <div><label>Expected Delivery Date & Time</label><input id="expectedDelivery" type="datetime-local"></div>
+    </div>
+
+    <label>Package Content</label><input id="packageContent" placeholder="iPhone, Documents, Clothes...">
+    <div class="grid2">
+      <div><label>Weight</label><input id="packageWeight" placeholder="2.5kg"></div>
+      <div><label>Shipping Fee</label><input id="shippingFee" placeholder="$120"></div>
+    </div>
+
+    <button class="btn create-btn" onclick="createShipment()">Generate Tracking + Waybill & Save to Cloud</button>
+    <div id="generatedCode"></div>
+  </div>
+
+  <!-- UPDATE -->
+  <div class="card">
+    <h2>🔄 Update Shipment Status</h2><p class="sub">Add live comments & location - shows on customer timeline</p>
+    <label>Tracking Number *</label><input id="updateTracking" placeholder="RE-20261016-926398">
+    <label>Status *</label>
+    <select id="updateStatus">
+      <option>Package Received</option>
+      <option>In Transit</option>
+      <option>At Sorting Center</option>
+      <option>Out for Delivery</option>
+      <option>Delivered</option>
+      <option>On Hold - Customs</option>
+      <option>Cancelled</option>
+    </select>
+    <label>Current Location *</label><input id="updateLocation" placeholder="Lagos Sorting Center">
+    <label>Comment (visible to customer)</label><textarea id="updateComment" rows="3" placeholder="Package cleared customs, on flight to New York..."></textarea>
+    <button class="btn update-btn" onclick="addUpdate()">Add Update to Timeline</button>
+
+    <div style="margin-top:20px;padding-top:14px;border-top:1px solid #eee">
+      <h2>🔍 Quick Track</h2>
+      <div style="display:flex;gap:8px;margin-top:8px"><input id="trackingInput" placeholder="Enter tracking"><button onclick="trackShipment()" style="padding:10px 14px;background:#FFCC00;border:none;border-radius:8px;font-weight:800;cursor:pointer">Go</button></div>
+    </div>
+  </div>
+
+  <!-- LIST -->
+  <div class="card list-section">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h2>📋 All Shipments - Manage</h2><button onclick="loadAllShipments()" style="padding:6px 12px;border:none;background:#eee;border-radius:6px;cursor:pointer">↻ Refresh</button></div>
+    <p class="sub">View, print waybill, cancel/restore, delete shipments - professional controls</p>
+    <div id="allShipments" style="margin-top:12px">Loading shipments from cloud...</div>
+  </div>
 </div>
-<div id="adminContent">
-<header class="header"><div class="logo-area"><img src="logo.png" style="height:45px"><h1>Admin</h1></div><div><a href="index.html" class="back">← Site</a> <button onclick="adminLogout()" style="margin-left:10px;background:#111;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer">Logout</button></div></header>
-<div class="admin-container">
-<h2>Create Shipment - Supabase Cloud</h2>
-<div class="admin-form">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<input id="senderName" placeholder="Sender *"><input id="receiverName" placeholder="Receiver *">
-<input id="receiverPhone" placeholder="Receiver Phone"><input id="origin" placeholder="Origin *">
-<input id="destination" placeholder="Destination *"><input id="packageContent" placeholder="Content">
-<input id="packageWeight" placeholder="Weight"><input id="shippingFee" placeholder="Fee">
-</div>
-<button onclick="createShipment()" class="create-btn">Generate Tracking & Save to Cloud</button>
-<div id="generatedCode" class="generated"></div>
-</div>
-<h2>Update Shipment - Comment Timeline</h2>
-<div class="admin-form">
-<input id="updateTracking" placeholder="Tracking Number"><select id="updateStatus"><option>Package Received</option><option>In Transit</option><option>At Sorting Facility</option><option>Out for Delivery</option><option>Delivered</option><option>On Hold - Customs</option></select>
-<input id="updateLocation" placeholder="Location"><textarea id="updateComment" placeholder="Comment..."></textarea>
-<button onclick="addUpdate()" class="update-btn">Add Comment</button>
-</div>
-<h2>All Shipments (Cloud)</h2><div id="allShipments"></div>
-</div>
-</div>
-<script type="module" src="app.js?v=final123"></script>
+
 <script>
-const ADMIN_USERNAME = "royaleadmin";
-const ADMIN_PASSWORD = "RoyaleExpress@2026";
-function adminLogin(){
-  const user=document.getElementById('adminUser').value.trim();
-  const pass=document.getElementById('adminPass').value.trim();
-  const error=document.getElementById('errorMsg');
-  if(user===ADMIN_USERNAME && pass===ADMIN_PASSWORD){
-    localStorage.setItem('royale_admin_logged_in','true');
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('adminContent').style.display='block';
-  }else{
-    error.style.display='block';
-    error.textContent='❌ Wrong username or password!';
+// Simple admin auth
+(function(){
+  const user=localStorage.getItem('royaleAdmin');
+  if(!user){
+    const u=prompt('Admin Username:'); const p=prompt('Admin Password:');
+    if(u==='royaleadmin' && p==='RoyaleExpress@2026'){ localStorage.setItem('royaleAdmin','true'); }
+    else{ alert('Wrong credentials! Use royaleadmin / RoyaleExpress@2026'); location.href='index.html'; }
   }
-}
-function adminLogout(){localStorage.removeItem('royale_admin_logged_in');location.reload();}
-window.onload=function(){if(localStorage.getItem('royale_admin_logged_in')==='true'){document.getElementById('loginScreen').style.display='none';document.getElementById('adminContent').style.display='block';}}
-document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none'){adminLogin();}});
+})();
+// Set default datetime to now
+document.getElementById('shipmentDate').value = new Date().toISOString().slice(0,16);
+let exp = new Date(); exp.setDate(exp.getDate()+5);
+document.getElementById('expectedDelivery').value = exp.toISOString().slice(0,16);
 </script>
+<script type="module" src="app.js?v=waybill2026"></script>
 </body>
 </html>
