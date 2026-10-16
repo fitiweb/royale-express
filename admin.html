@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login - Royale Express</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.login-container{max-width:400px;margin:80px auto;background:#fff;padding:30px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.15);border-top:5px solid #FFCC00;text-align:center}
+.login-container img{height:70px;margin-bottom:15px}
+.login-container h2{color:#D40511;margin-bottom:20px}
+.login-container input{width:100%;padding:12px;margin-bottom:12px;border:1px solid #ddd;border-radius:8px}
+.login-btn{background:#D40511;color:#fff;border:none;padding:12px;width:100%;border-radius:8px;font-weight:800;cursor:pointer;font-size:15px}
+.error-msg{color:#D40511;background:#ffeaea;padding:8px;border-radius:6px;margin-bottom:12px;display:none;font-size:13px}
+#adminContent{display:none}
+</style>
+</head>
+<body>
+<div id="loginScreen" class="login-container">
+  <img src="logo.png" alt="Logo">
+  <h2>Admin Login</h2>
+  <p style="font-size:12px;color:#666;margin-bottom:15px">Royale Express<br>royalexpressdelivery011@gmail.com</p>
+  <div id="errorMsg" class="error-msg"></div>
+  <input type="text" id="adminUser" placeholder="Username">
+  <input type="password" id="adminPass" placeholder="Password">
+  <button onclick="adminLogin()" class="login-btn">Login →</button>
+  <p style="font-size:11px;color:#888;margin-top:15px"><br>----------------</p>
+  <a href="index.html" style="display:block;margin-top:15px;font-size:12px;color:#D40511;text-decoration:none">← Back to Site</a>
+</div>
+<div id="adminContent">
+<header class="header"><div class="logo-area"><img src="logo.png" style="height:45px"><h1>Admin</h1></div><div><a href="index.html" class="back">← Site</a> <button onclick="adminLogout()" style="margin-left:10px;background:#111;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer">Logout</button></div></header>
+<div class="admin-container">
+<h2>Create Shipment - Supabase Cloud</h2>
+<div class="admin-form">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<input id="senderName" placeholder="Sender *"><input id="receiverName" placeholder="Receiver *">
+<input id="receiverPhone" placeholder="Receiver Phone"><input id="origin" placeholder="Origin *">
+<input id="destination" placeholder="Destination *"><input id="packageContent" placeholder="Content">
+<input id="packageWeight" placeholder="Weight"><input id="shippingFee" placeholder="Fee">
+</div>
+<button onclick="createShipment()" class="create-btn">Generate Tracking & Save to Cloud</button>
+<div id="generatedCode" class="generated"></div>
+</div>
+<h2>Update Shipment - Comment Timeline</h2>
+<div class="admin-form">
+<input id="updateTracking" placeholder="Tracking Number"><select id="updateStatus"><option>Package Received</option><option>In Transit</option><option>At Sorting Facility</option><option>Out for Delivery</option><option>Delivered</option><option>On Hold - Customs</option></select>
+<input id="updateLocation" placeholder="Location"><textarea id="updateComment" placeholder="Comment..."></textarea>
+<button onclick="addUpdate()" class="update-btn">Add Comment</button>
+</div>
+<h2>All Shipments (Cloud)</h2><div id="allShipments"></div>
+</div>
+</div>
+<script type="module" src="app.js"></script>
+<script>
+const ADMIN_USERNAME = "royaleadmin";
+const ADMIN_PASSWORD = "RoyaleExpress@2026";
+function adminLogin(){
+  const user=document.getElementById('adminUser').value.trim();
+  const pass=document.getElementById('adminPass').value.trim();
+  const error=document.getElementById('errorMsg');
+  if(user===ADMIN_USERNAME && pass===ADMIN_PASSWORD){
+    localStorage.setItem('royale_admin_logged_in','true');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminContent').style.display='block';
+  }else{
+    error.style.display='block';
+    error.textContent='❌ Wrong username or password!';
+  }
+}
+function adminLogout(){localStorage.removeItem('royale_admin_logged_in');location.reload();}
+window.onload=function(){if(localStorage.getItem('royale_admin_logged_in')==='true'){document.getElementById('loginScreen').style.display='none';document.getElementById('adminContent').style.display='block';}}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none'){adminLogin();}});
+</script>
+</body>
+</html>
