@@ -10,8 +10,14 @@ async function sbInsert(p){
   const d=await r.json(); if(!r.ok) throw new Error(JSON.stringify(d)); return d;
 }
 async function sbGetByTrack(code){
-  const r=await fetch(`${SUPABASE_URL}/rest/v1/shipments?tracking_number=eq.${code}`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
-  const d=await r.json(); return d[0]||null;
+  // Try tracking_number first
+  let r=await fetch(`${SUPABASE_URL}/rest/v1/shipments?tracking_number=eq.${code}`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
+  let d=await r.json();
+  if(d[0]) return d[0];
+  // If not found, try waybill_number
+  r=await fetch(`${SUPABASE_URL}/rest/v1/shipments?waybill_number=eq.${code}`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
+  d=await r.json();
+  return d[0]||null;
 }
 async function sbGetAll(){
   const r=await fetch(`${SUPABASE_URL}/rest/v1/shipments?order=created_at.desc&limit=100`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
