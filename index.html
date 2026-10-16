@@ -1,35 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Royale Express - Fast & Secure Worldwide Delivery</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royale Express Delivery Company - Fast & Secure Worldwide Shipping</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#fff;color:#222}
+.header{background:#D40511;padding:12px 22px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
+.logo-wrap{display:flex;align-items:center;gap:10px;color:#fff;font-weight:900;font-size:20px}
+.logo-wrap img{height:42px;background:#fff;padding:5px;border-radius:8px}
+.nav a{color:#fff;text-decoration:none;margin-left:18px;font-weight:600;font-size:14px}
+.nav a.cta{background:#FFCC00;color:#000;padding:8px 16px;border-radius:20px}
+.hero{background:linear-gradient(105deg,#D40511 0%,#a8030e 55%,#7a020a 100%);color:#fff;padding:50px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:30px}
+.hero-text{max-width:520px}
+.hero-text h1{font-size:42px;line-height:1.1;font-weight:900;margin-bottom:12px}
+.hero-text h1 span{color:#FFCC00}
+.hero-text p{font-size:16px;opacity:.9;margin-bottom:20px;line-height:1.5}
+.hero-image img{width:300px;max-width:90vw;filter:drop-shadow(0 10px 20px rgba(0,0,0,.3));background:#fff;padding:12px;border-radius:16px}
+.track-card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.2);max-width:480px;margin-top:14px}
+.track-card h3{color:#222;font-size:16px;margin-bottom:10px}
+.track-row{display:flex;gap:10px}
+.track-row input{flex:1;padding:14px;border:2px solid #ddd;border-radius:8px;font-size:15px;outline:none}
+.track-row input:focus{border-color:#D40511}
+.track-row button{padding:14px 20px;background:#D40511;color:#fff;border:none;border-radius:8px;font-weight:800;cursor:pointer;white-space:nowrap}
+.stats{display:flex;gap:20px;background:#fff;padding:16px 20px;justify-content:center;flex-wrap:wrap;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.stat{text-align:center}
+.stat b{font-size:22px;color:#D40511;display:block}
+.stat span{font-size:12px;color:#666}
+.services{padding:50px 20px;max-width:1100px;margin:0 auto}
+.services h2{text-align:center;font-size:28px;margin-bottom:8px}
+.services .sub{text-align:center;color:#666;margin-bottom:30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{border:1px solid #eee;border-radius:12px;padding:20px;text-align:center;transition:.2s}
+.card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-3px)}
+.card .icon{font-size:36px;margin-bottom:10px}
+.card h4{margin-bottom:6px}
+.card p{font-size:13px;color:#666;line-height:1.5}
+.why{background:#f8f8f8;padding:50px 20px}
+.why-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:30px;align-items:center;justify-content:center}
+.why-text{max-width:500px}
+.why-text h2{font-size:26px;margin-bottom:12px}
+.why-text ul{list-style:none}
+.why-text li{padding:8px 0;font-size:14px}
+.why-text li::before{content:'✅ '; }
+.footer{background:#111;color:#aaa;padding:36px 20px;text-align:center}
+.footer img{height:48px;background:#fff;padding:6px;border-radius:8px;margin-bottom:10px}
+.footer a{color:#FFCC00;text-decoration:none}
+@media(max-width:700px){.hero-text h1{font-size:32px}.nav{display:none}}
+</style>
 </head>
 <body>
-<header class="header">
-  <div class="logo-area"><img src="logo.png" alt="Royale Express"><div><h1>Royale Express</h1><span>Delivery Company</span></div></div>
-  <div class="contact-top"><span>📧 royalexpressdelivery011@gmail.com</span><span>📞 +17122121378</span><a href="https://wa.me/17122121378" target="_blank" class="wa-btn">WhatsApp</a></div>
-</header>
-<nav class="dhl-nav"><a href="index.html" class="active">HOME</a><a href="about.html">ABOUT</a><a href="services.html">SERVICES</a><a href="contact.html">CONTACT</a><a href="admin.html">ADMIN</a></nav>
-<section class="hero-slider">
-  <div class="hero-content">
-    <h2>We Deliver <span style="color:#D40511">Fast & Safe</span> Worldwide</h2>
-    <p>Real-time tracking with unique numbers, QR receipt & live comment updates.</p>
-    <div class="track-box">
-      <input type="text" id="trackingInput" placeholder="Enter Tracking e.g RE-20260513-123456">
-      <button onclick="trackShipment()">TRACK →</button>
-    </div>
-    <p style="font-size:11px;margin-top:8px;color:#666">e.g: RE-20260513-999999</p>
+
+<div class="header">
+  <div class="logo-wrap"><img src="logo.png" alt="logo">Royale Express</div>
+  <div class="nav">
+    <a href="index.html">Home</a>
+    <a href="tracking.html">Track</a>
+    <a href="#services">Services</a>
+    <a href="admin.html" class="cta">Admin Login</a>
   </div>
-  <div class="hero-images"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600" alt="Van"></div>
-</section>
-<section class="stats"><div><h3>10k+</h3><p>Delivered</p></div><div><h3>150+</h3><p>Countries</p></div><div><h3>24/7</h3><p>Support</p></div><div><h3>99%</h3><p>On-Time</p></div></section>
-<section class="services-preview"><h2>Our Services</h2><div class="grid">
-<div class="card"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=300"><h4>Express Shipping</h4><p>2-5 days worldwide.</p></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=300"><h4>Door to Door</h4><p>Pickup and deliver.</p></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=300"><h4>Freight</h4><p>Air & Sea freight.</p></div>
-</div></section>
-<footer><strong>Royale Express Delivery Company</strong><br>royalexpressdelivery011@gmail.com | +17122121378<br>© 2026 Royale Express</footer>
-<script type="module" src="app.js"></script>
+</div>
+
+<div class="hero">
+  <div class="hero-text">
+    <h1>Fast, Secure & <span>Royale</span> Delivery Worldwide</h1>
+    <p>We deliver your parcels with royal care. Real-time tracking, proof of delivery, and 24/7 support - trusted by thousands like DHL.</p>
+    
+    <div class="track-card">
+      <h3>📦 Track Your Shipment Instantly</h3>
+      <div class="track-row">
+        <input id="trackingInput" placeholder="Enter tracking: RE-20261016-926398">
+        <button onclick="trackShipment()">TRACK →</button>
+      </div>
+      <p style="font-size:11px;color:#888;margin-top:8px">Try your code: RE-20261016-926398</p>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="logo.png" alt="Royale Express Box Logo">
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>15,000+</b><span>Parcels Delivered</span></div>
+  <div class="stat"><b>120+</b><span>Countries</span></div>
+  <div class="stat"><b>99.2%</b><span>On-Time Delivery</span></div>
+  <div class="stat"><b>24/7</b><span>Customer Support</span></div>
+</div>
+
+<div class="services" id="services">
+  <h2>Our Premium Services</h2>
+  <p class="sub">Royale treatment for every package</p>
+  <div class="grid">
+    <div class="card"><div class="icon">✈️</div><h4>Express Shipping</h4><p>Same-day & next-day delivery worldwide with real-time updates.</p></div>
+    <div class="card"><div class="icon">📦</div><h4>Secure Packaging</h4><p>Professional packing with insurance, photo proof and signature.</p></div>
+    <div class="card"><div class="icon">🌍</div><h4>Global Network</h4><p>From Lagos to New York, London to Dubai - we cover 120+ countries.</p></div>
+    <div class="card"><div class="icon">🔍</div><h4>Live Tracking</h4><p>QR code receipt + live comment timeline like DHL & FedEx.</p></div>
+  </div>
+</div>
+
+<div class="why">
+  <div class="why-inner">
+    <div class="why-text">
+      <h2>Why Choose Royale Express?</h2>
+      <ul>
+        <li>Instant tracking number generation with QR code receipt</li>
+        <li>Professional admin panel to update status & add comments</li>
+        <li>Customers can print receipt & share via WhatsApp</li>
+        <li>Supabase cloud storage - no data loss, fast & secure</li>
+        <li>Company branding on every receipt (logo, email, phone)</li>
+        <li>24/7 WhatsApp: +17122121378</li>
+      </ul>
+    </div>
+    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.06);max-width:360px;width:100%">
+      <h4 style="margin-bottom:10px">📞 Contact Us</h4>
+      <p style="font-size:14px;line-height:1.7">
+        <b>Email:</b> royalexpressdelivery011@gmail.com<br>
+        <b>Phone:</b> +17122121378<br>
+        <b>WhatsApp:</b> +17122121378<br>
+        <b>HQ:</b> Lagos, Nigeria - Worldwide Shipping
+      </p>
+      <a href="https://wa.me/17122121378?text=Hello%20Royale%20Express%2C%20I%20want%20to%20ship" target="_blank" style="display:block;margin-top:12px;background:#25D366;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:800">💬 Chat on WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <img src="logo.png" alt="logo"><br>
+  <b style="color:#fff">Royale Express - Delivery Company</b><br>
+  Fast | Secure | Royale | Worldwide<br><br>
+  Email: <a href="mailto:royalexpressdelivery011@gmail.com">royalexpressdelivery011@gmail.com</a> | Phone: +17122121378<br>
+  © 2026 Royale Express. All rights reserved. | <a href="admin.html">Admin</a>
+</div>
+
+<script type="module">
+  import { displayResult } from './app.js';
+  window.trackShipment = function(){
+    const code = document.getElementById('trackingInput').value.trim();
+    if(!code){ alert('Enter tracking number'); return; }
+    window.location.href = `tracking.html?code=${code}`;
+  }
+  // Enter key
+  document.getElementById('trackingInput').addEventListener('keypress', e=>{
+    if(e.key==='Enter') trackShipment();
+  });
+</script>
+
 </body>
 </html>
